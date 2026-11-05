@@ -7,6 +7,7 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven(url = "https://www.jitpack.io")
+        
     }
 }
 
@@ -31,7 +32,8 @@ rootProject.name = "Keiyoushi"
 /**
  * Add or remove modules to load as needed for local development here.
  */
-loadAllIndividualExtensions()
+// loadAllIndividualExtensions()
+loadIndividualExtension("en", "batcave")
 // loadIndividualExtension("all", "mangadex")
 
 /**

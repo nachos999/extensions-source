@@ -42,13 +42,13 @@ object DleGuardResolver {
     @Synchronized
     private fun solve(siteUrl: String, userAgent: String?, call: Call): Boolean {
         if (failedOnce) return false
-        if (System.currentTimeMillis() - lastSolveAt < PARALLEL_TRUST_WINDOW_MS) return true
+        if ((System.currentTimeMillis() - lastSolveAt) < PARALLEL_TRUST_WINDOW_MS) return true
 
         val cookieManager = CookieManager.getInstance()
         cookieManager.setCookie(siteUrl, "$TRUST_COOKIE=; Max-Age=0; Path=/")
 
         return try {
-            runWebViewBlocking<Unit>(call, timeout = TIMEOUT_SECONDS.seconds) {
+            runWebViewBlocking(call, timeout = TIMEOUT_SECONDS.seconds) {
                 this.userAgent = userAgent!!
                 blockImages = true
 
@@ -68,7 +68,7 @@ object DleGuardResolver {
                 failedOnce = true
             }
             solved
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             failedOnce = true
             false
         }
